@@ -1,0 +1,23 @@
+input[type=text] {
+  background-color: #D4DBEB;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding-left: 40px;
+}
+
+input[type=password] {
+  background-color: #D4DBEB;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding-left: 40px;
+}
+
+body{
+  background-color: white;
+}
+.button1{
+  padding: 10px 20px; 
+  font-size: 16px; 
+  background-color: #FF3333; 
+  color: white;
+}
