@@ -63,7 +63,7 @@
                         }
                         echo "<td>";
                         echo "<form method='POST' action=''>";
-                        echo "<input type='submit' class='details-button' value='Detalles'>";
+                        echo "<button onclick='showDetailsModal(" . $row['id'] . ");' class='details-button'>Detalles</button>";
                         echo "<input type='submit' class='edit-button' value='Editar'>";
                         echo '<a class="delete-button" href="delete.php?id='.$row['id'].'">Eliminar</a>';
                         echo "</form>";
@@ -140,6 +140,22 @@
                         row += "</form></td></tr>";
                         tbody.append(row);
                     });
+                }
+            });
+        }
+
+        function showDetailsModal(id) {
+            var dialog = document.getElementById('modal');
+            $.ajax({
+                url: "details.php",
+                type: "GET",
+                data: {id: id},
+                success: function (data) {
+                    dialog.innerHTML = data;
+                    dialog.showModal();
+                },
+                error: function () {
+                    alert('No se pudo cargar la información');
                 }
             });
         }
