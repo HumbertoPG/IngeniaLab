@@ -13,6 +13,7 @@ body {
     background-color: white;
     margin: 0;
     padding: 0;
+    margin-left: 5rem
 }
 
 body::-webkit-scrollbar {
@@ -30,9 +31,11 @@ body::-webkit-scrollbar-thumb {
 .navbar {
     width: 5rem;
     height: 100vh;
-    position: fixed;
+    position: absolute; /* Change to absolute positioning */
     background-color: var(--bg-primary);
     transition: width 200ms ease;
+    top: 0; /* Add top: 0 to position it at the top */
+    left: 0; /* Add left: 0 to position it on the left */
 }
 
 .navbar-nav {
