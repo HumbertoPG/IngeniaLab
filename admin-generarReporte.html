@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/genReporte.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <title>Mi Página</title>
+ 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Responsive Forms for Report</title>
+  <link rel="stylesheet" href="css/styleReporte.css" />
 
   <link rel="stylesheet" href="css/styleNav.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
@@ -101,77 +102,84 @@
 
       
   </div>
-  <div id="main-content">
-    <h1>Generar Reporte</h1>
-    <table>
-      <thead>
-        <tr>
-          <td>&nbsp</td>
-          <td>&nbsp</td>
 
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Incluír nombre y número de matrícula o colaborador
-          </td>
-          <td><svg viewBox="0 0 448 512" width="30" title="square">
-              <path
-                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z" />
-            </svg></td>
+    <section class="container">
+      <header>Generar Reporte</header>
+      <form action="#" class="form">
+          <div class="input-box">
+              <label>Nombre Completo</label>
+              <input type="text" placeholder="Ingresar nombre" required />
+          </div>
 
-        </tr>
-        <tr>
-          <td>Incluír uso de profesores
-          </td>
-          <td><svg viewBox="0 0 448 512" width="30" title="square">
-              <path
-                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z" />
-            </svg></td>
+          <div class="input-box">
+              <label>Matrícula</label>
+              <input type="text" placeholder="Ingresar matrícula" required />
+          </div>
 
-        </tr>
-        <tr>
-          <td>Incluir uso de administradores
-          </td>
-          <td><svg viewBox="0 0 448 512" width="30" title="square">
-              <path
-                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z" />
-            </svg></td>
+          <div class="input-box">
+              <label>Correo</label>
+              <input type="text" placeholder="Ingresar correo" required />
+          </div>
 
-        </tr <tr>
-        <td>Incluir graficas de uso
-        </td>
-        <td><svg viewBox="0 0 448 512" width="30" title="square">
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z" />
-          </svg></td>
+          <div class="column">
+              <div class="input-box">
+                  <label>Fecha inicio</label>
+                  <input type="date" placeholder="Ingresar fecha1" required />
+              </div>
 
-        </tr>
-        <tr>
-          <td>&nbsp</td>
-          <td>&nbsp</td>
+              <div class="input-box">
+                  <label>Fecha final</label>
+                  <input type="date" placeholder="Ingresar fecha2" required />
+              </div>
+          </div>
 
-        </tr>
+          <div>
+              <h3>Incluír profesores</h3>
+              <div class="gender-option">
+                  <div class="gender"></div>
+                  <input type="radio" id="check-teach-yes" name="include_teachers" value="yes" checked />
+                  <label for="check-teach-yes">Si</label>
+              </div>
+              <div class="gender-option">
+                  <div class="gender"></div>
+                  <input type="radio" id="check-teach-no" name="include_teachers" value="no" />
+                  <label for="check-teach-no">No</label>
+              </div>
+          </div>
 
-        <tr>
-          <td>&nbsp</td>
-          <td>&nbsp</td>
+          <div>
+              <h3>Incluír administradores</h3>
+              <div class="gender-option">
+                  <div class="gender"></div>
+                  <input type="radio" id="check-admin-yes" name="include_admins" value="yes" checked />
+                  <label for="check-admin-yes">Si</label>
+              </div>
+              <div class="gender-option">
+                  <div class="gender"></div>
+                  <input type="radio" id="check-admin-no" name="include_admins" value="no" />
+                  <label for="check-admin-no">No</label>
+              </div>
+          </div>
 
-        </tr>
-        <tr>
-          <td>&nbsp</td>
-          <td>&nbsp</td>
+          <div>
+              <h3>Incluír gráficas</h3>
+              <div class="gender-option">
+                  <div class="gender"></div>
+                  <input type="radio" id="check-graph-yes" name="include_graphs" value="yes" checked />
+                  <label for="check-graph-yes">Si</label>
+              </div>
+              <div class="gender-option">
+                  <div class="gender"></div>
+                  <input type="radio" id="check-graph-no" name="include_graphs" value="no" />
+                  <label for="check-graph-no">No</label>
+              </div>
+          </div>
 
-        </tr>
-
-        <tr>
-          <td> <img src="https://www.pngmart.com/files/21/Add-Button-PNG-Isolated-File.png" width="100"></img></td>
-
-        </tr>
-
-      </tbody>
-    </table>
-  </div>
+          <div class="button-container">
+              <button type="submit">Generar Reporte</button>
+              <button class="see-reports">Ver Reportes</button>
+            </div>
+      </form>
+  </section>
 </body>
-
 </html>
