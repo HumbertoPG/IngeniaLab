@@ -92,6 +92,8 @@ if (isset($_POST['machine_id'])) {
       </button>
       
     </div>
+    <?php include '../reservass/add-reserva.php'; ?>
+   
 
     <script src="../../public/js/scriptCal.js"></script>
   </body>
