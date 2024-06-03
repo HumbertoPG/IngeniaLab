@@ -7,7 +7,7 @@
  
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Responsive Forms for Report</title>
-  <link rel="stylesheet" href="/TC2005B_602_01/IngeniaLab/public/css/genReporte.css" />
+  <link rel="stylesheet" href="../../public/css/genReporte.css" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
 </head>
 

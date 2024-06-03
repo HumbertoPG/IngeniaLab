@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <title>Admin Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/TC2005B_602_01/IngeniaLab/public/css/styles.css">
-    <link rel="stylesheet" href="/TC2005B_602_01/IngeniaLab/public/css/home.css">
+    <link rel="stylesheet" href="../../public/css/styles.css">
+    <link rel="stylesheet" href="../../public/css/home.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 

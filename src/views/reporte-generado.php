@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-
+<!-- /TC2005B_602_01 -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Reporte Generado</title>
-  <link rel="stylesheet" href="/TC2005B_602_01/IngeniaLab/public/css/genReporte.css" />
-  <link rel="stylesheet" href="/TC2005B_602_01/IngeniaLab/public/css/styleNav.css">
+  <link rel="stylesheet" href="/IngeniaLab/public/css/genReporte.css" />
+  <link rel="stylesheet" href="/IngeniaLab/public/css/styleNav.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

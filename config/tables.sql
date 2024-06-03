@@ -127,15 +127,42 @@ CREATE TABLE Registro_uso_maquinas (
 
 INSERT INTO Registro_uso_maquinas VALUES (1, "2024-03-20 12:10:00", 1), (1, "2024-03-20 12:10:00", 2);
 
-CREATE TABLE Reservas (
+CREATE TABLE Reservas_maquina (
 
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-idMaestro INT,
+idUsuarios VARCHAR(9),
 fechaInicio DATETIME,
 fechaFinal DATETIME,
 maquina INT,
+motivo_uso VARCHAR,
 
-FOREIGN KEY (idMaestro) REFERENCES Maestros(ID) ON DELETE RESTRICT,
+FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id) ON DELETE RESTRICT,
 FOREIGN KEY (maquina) REFERENCES Maquinas(ID) ON DELETE RESTRICT
+
+
+
+);
+
+CREATE TABLE Mesas (
+
+    ID VARCHAR(12) PRIMARY KEY,
+    fechaRegistro DATETIME,
+    tiempoUso INT,
+    estado INT
+
+
+);
+
+CREATE TABLE Reservas_mesa (
+
+    ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idUsuarios VARCHAR(9),
+    fechaInicio DATETIME,
+    fechaFinal DATETIME,
+    idMesa VARCHAR(12),
+    motivo_uso VARCHAR(100),
+
+    FOREIGN KEY (idUsuarios) REFERENCES Usuarios(id) ON DELETE RESTRICT,
+    FOREIGN KEY (idMesa) REFERENCES Mesa(ID) ON DELETE RESTRICT
 
 );
