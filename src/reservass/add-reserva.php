@@ -6,41 +6,36 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/TC2005B_602_01/IngeniaLab/config/data
 $pdo = Database::connect();
 
 // Ruta para guardar eventos en la base de datos
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eventsArr'])) {
-    $eventsArr = json_decode($_POST['eventsArr'], true);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $data = json_decode(file_get_contents('php://input'), true);
 
-    foreach ($eventsArr as $event) {
-        $day = $event['day'];
-        $month = $event['month'];
-        $year = $event['year'];
-        
-        foreach ($event['events'] as $subEvent) {
-            $title = $subEvent['title'];
-            $time_from = $subEvent['time_from']; // Hora de inicio del evento
-            $time_to = $subEvent['time_to'];     // Hora de fin del evento
+    $title = $data['title'];
+    $time_from = $data['time_from'];
+    $time_to = $data['time_to'];
+    $day = $data['day'];
+    $month = $data['month'];
+    $year = $data['year'];
 
-            // Obtener el idUsuario de la sesión actual y el id de la máquina seleccionada
-            $idUsuario = $_SESSION['idUsuario'] ?? 0;  // ID del usuario de la sesión actual
-            $maquina = $_SESSION['machine_id'] ?? 0;   // ID de la máquina seleccionada
+    // Obtener el idUsuario de la sesión actual y el id de la máquina seleccionada
+    $idUsuario = $_SESSION['idUsuario'] ?? 0;  // ID del usuario de la sesión actual
+    $maquina = $_SESSION['machine_id'] ?? 0;   // ID de la máquina seleccionada
 
-            $fechaInicio = sprintf("%04d-%02d-%02d %s:00", $year, $month, $day, $time_from); // Fecha y hora de inicio del evento
-            $fechaFinal = sprintf("%04d-%02d-%02d %s:00", $year, $month, $day, $time_to);   // Fecha y hora de fin del evento
-            $motivo_uso = 'Evento reservado';
+    $fechaInicio = sprintf("%04d-%02d-%02d %s:00", $year, $month, $day, $time_from); // Fecha y hora de inicio del evento
+    $fechaFinal = sprintf("%04d-%02d-%02d %s:00", $year, $month, $day, $time_to);   // Fecha y hora de fin del evento
+    $motivo_uso = 'Evento reservado';
 
-            try {
-                // Preparar la sentencia SQL
-                $sql = "INSERT INTO Reservas_maquina (idUsuarios, fechaInicio, fechaFinal, maquina, motivo_uso, titulo, hora_inicio, hora_fin)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                
-                // Preparar la sentencia
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([$idUsuario, $fechaInicio, $fechaFinal, $maquina, $motivo_uso, $title, $time_from, $time_to]);
+    try {
+        // Preparar la sentencia SQL
+        $sql = "INSERT INTO Reservas_maquina (idUsuarios, fechaInicio, fechaFinal, maquina, motivo_uso, titulo, hora_inicio, hora_fin)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-                echo "Evento guardado correctamente";
-            } catch (PDOException $e) {
-                echo "Error al guardar evento: " . $e->getMessage();
-            }
-        }
+        // Preparar la sentencia
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$idUsuario, $fechaInicio, $fechaFinal, $maquina, $motivo_uso, $title, $time_from, $time_to]);
+
+        echo "Evento guardado correctamente";
+    } catch (PDOException $e) {
+        echo "Error al guardar evento: " . $e->getMessage();
     }
 }
 

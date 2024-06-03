@@ -90,7 +90,7 @@ if (isset($_POST['machine_id'])) {
       <button class="add-event">
         <i class="fas fa-plus"></i>
       </button>
-      <button>Terminar</button>
+      
     </div>
 
     <script src="../../public/js/scriptCal.js"></script>

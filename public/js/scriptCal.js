@@ -348,14 +348,11 @@ addEventSubmit.addEventListener("click", () => {
     timeToArr[0] > 23 ||
     timeToArr[1] > 59
   ) {
-    alert("Invalid Time Format");
+    alert("Formato de hora inválido");
     return;
   }
 
-  const timeFrom = convertTime(eventTimeFrom);
-  const timeTo = convertTime(eventTimeTo);
-
-  //check if event is already added
+  // Verificar si el evento ya existe
   let eventExist = false;
   eventsArr.forEach((event) => {
     if (
@@ -363,59 +360,98 @@ addEventSubmit.addEventListener("click", () => {
       event.month === month + 1 &&
       event.year === year
     ) {
-      event.events.forEach((event) => {
-        if (event.title === eventTitle) {
+      event.events.forEach((existingEvent) => {
+        if (existingEvent.title === eventTitle) {
           eventExist = true;
         }
       });
     }
   });
+
   if (eventExist) {
-    alert("Event already added");
+    alert("El evento ya ha sido agregado");
     return;
   }
+
+  // Crear el nuevo evento
   const newEvent = {
     title: eventTitle,
-    timeFrom: eventTimeFrom,
-    timeTo: eventTimeTo
+    time_from: eventTimeFrom,
+    time_to: eventTimeTo,
+    day: activeDay,
+    month: month + 1,
+    year: year
   };
-  console.log(newEvent);
-  console.log(activeDay);
-  let eventAdded = false;
-  if (eventsArr.length > 0) {
-    eventsArr.forEach((item) => {
-      if (
-        item.day === activeDay &&
-        item.month === month + 1 &&
-        item.year === year
-      ) {
-        item.events.push(newEvent);
-        eventAdded = true;
+
+  // Enviar el nuevo evento al servidor usando fetch
+  fetch('../../src/reservass/add-reserva.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newEvent)
+  })
+  .then(response => response.text())
+  .then(data => {
+    console.log(data); // Mostrar la respuesta del servidor
+    if (data.includes('Evento guardado correctamente')) {
+      // Agregar el evento a eventsArr si se guardó correctamente en la base de datos
+      let eventAdded = false;
+      if (eventsArr.length > 0) {
+        eventsArr.forEach((item) => {
+          if (
+            item.day === activeDay &&
+            item.month === month + 1 &&
+            item.year === year
+          ) {
+            item.events.push(newEvent);
+            eventAdded = true;
+          }
+        });
       }
-    });
-  }
 
-  if (!eventAdded) {
-    eventsArr.push({
-      day: activeDay,
-      month: month + 1,
-      year: year,
-      events: [newEvent],
-    });
-  }
+      if (!eventAdded) {
+        eventsArr.push({
+          day: activeDay,
+          month: month + 1,
+          year: year,
+          events: [newEvent]
+        });
+      }
 
-  console.log(eventsArr);
-  addEventWrapper.classList.remove("active");
-  addEventTitle.value = "";
-  addEventFrom.value = "";
-  addEventTo.value = "";
-  updateEvents(activeDay);
-  //select active day and add event class if not added
-  const activeDayEl = document.querySelector(".day.active");
-  if (!activeDayEl.classList.contains("event")) {
-    activeDayEl.classList.add("event");
-  }
+      // Limpiar formulario y actualizar la UI
+      addEventWrapper.classList.remove("active");
+      addEventTitle.value = "";
+      addEventFrom.value = "";
+      addEventTo.value = "";
+      updateEvents(activeDay);
+
+      // Agregar clase de evento al día activo si no se ha añadido
+      const activeDayEl = document.querySelector(".day.active");
+      if (!activeDayEl.classList.contains("event")) {
+        activeDayEl.classList.add("event");
+      }
+    } else {
+      alert("Error al guardar el evento. Inténtalo de nuevo.");
+    }
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    alert("Error al guardar el evento. Inténtalo de nuevo.");
+  });
 });
+
+// Cargar eventos desde el servidor al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+  fetch('../../src/reservass/add-reserva.php')
+    .then(response => response.json())
+    .then(data => {
+      eventsArr = data;
+      updateEvents(activeDay);
+    })
+    .catch(error => console.error('Error al cargar eventos:', error));
+});
+
 
 //function to delete event when clicked on event
 eventsContainer.addEventListener("click", (e) => {
