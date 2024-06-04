@@ -4,12 +4,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/TC2005B_602_01/IngeniaLab/config/data
 
 // Obtener conexión a la base de datos
 $pdo = Database::connect();
-
 // Ruta para guardar eventos en la base de datos
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents('php://input'), true);
-
-    $title = $data['title'];
+    
+    $motivo_uso = $data['title'];
     $time_from = $data['time_from'];
     $time_to = $data['time_to'];
     $day = $data['day'];
@@ -20,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $idUsuario = $_SESSION['idUsuario'] ?? 0;  // ID del usuario de la sesión actual
     
     $idUsuario = isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : 0;
+    $idUsuario = 1;
     $maquina = isset($_SESSION['machine_id']) ? $_SESSION['machine_id'] : 0;
 
     $fechaInicio = sprintf("%04d-%02d-%02d %s:00", $year, $month, $day, $time_from); // Fecha y hora de inicio del evento
@@ -28,12 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Preparar la sentencia SQL
-        $sql = "INSERT INTO Reservas_maquina (idUsuarios, fechaInicio, fechaFinal, maquina, motivo_uso, titulo, hora_inicio, hora_fin)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO Reservas_maquina (idUsuarios, fechaInicio, fechaFinal, maquina, motivo_uso)
+                VALUES (?, ?, ?, ?, ?)";
 
         // Preparar la sentencia
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$idUsuario, $fechaInicio, $fechaFinal, $maquina, $motivo_uso, $title, $time_from, $time_to]);
+        $stmt->execute([ $idUsuario, $fechaInicio, $fechaFinal, $maquina, $motivo_uso]);
 
         echo "Evento guardado correctamente";
     } catch (PDOException $e) {
@@ -55,9 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 'year' => (int) substr($row['fechaInicio'], 0, 4),
                 'events' => array(
                     array(
-                        'title' => $row['titulo'],
-                        'time_from' => substr($row['hora_inicio'], 0, 5),
-                        'time_to' => substr($row['hora_fin'], 0, 5)
+                        'title' => $row['title'],
+                        'fechaInicio' => substr($row['hora_inicio'], 0, 5),
+                        'fechaFinal' => substr($row['hora_fin'], 0, 5)
                     )
                 )
             );
@@ -65,11 +65,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         echo json_encode($eventsArr);
+        
     } catch (PDOException $e) {
         echo "Error al obtener eventos: " . $e->getMessage();
     }
 }
-
-// Cerrar conexión
 $pdo = null;
 ?>
