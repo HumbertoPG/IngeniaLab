@@ -65,7 +65,7 @@ if (isset($_POST['machine_id'])) {
           </div>
           <div class="add-event-body">
             <div class="add-event-input">
-              <input type="text" placeholder="Motivo" class="event-name" />
+              <input type="text" placeholder="Motivo" class="event-name"/>
             </div>
             <div class="add-event-input">
               <input

@@ -8,7 +8,7 @@ $pdo = Database::connect();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents('php://input'), true);
     
-    $motivo_uso = $data['title'];
+    $motivo_uso = $data['motivo'];
     $time_from = $data['time_from'];
     $time_to = $data['time_to'];
     $day = $data['day'];
@@ -18,13 +18,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener el idUsuario de la sesión actual y el id de la máquina seleccionada
     // $idUsuario = $_SESSION['idUsuario'] ?? 0;  // ID del usuario de la sesión actual
     
-    $idUsuario = isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : 0;
+    $idUsuario = isset($_SESSION['idUsuario']);
     $idUsuario = 1;
-    $maquina = isset($_SESSION['machine_id']) ? $_SESSION['machine_id'] : 0;
+    //$maquina = isset($_SESSION['machine_id']) ? $_SESSION['machine_id'] : 0;
+    $maquina = isset($_SESSION['machine_id']);
 
     $fechaInicio = sprintf("%04d-%02d-%02d %s:00", $year, $month, $day, $time_from); // Fecha y hora de inicio del evento
     $fechaFinal = sprintf("%04d-%02d-%02d %s:00", $year, $month, $day, $time_to);   // Fecha y hora de fin del evento
-    $motivo_uso = 'Evento reservado';
+   // $motivo_uso = 'Evento reservado'; 
+   
 
     try {
         // Preparar la sentencia SQL
@@ -46,23 +48,22 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     try {
         $sql = "SELECT * FROM Reservas_maquina";
         $stmt = $pdo->query($sql);
-        $eventsArr = array();
+        //$eventsArr = array();
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $event = array(
+        $event = array(
                 'day' => (int) substr($row['fechaInicio'], 8, 2),
                 'month' => (int) substr($row['fechaInicio'], 5, 2),
                 'year' => (int) substr($row['fechaInicio'], 0, 4),
                 'events' => array(
                     array(
-                        'title' => $row['title'],
+                        'motivo' => $row['motivo_uso'], 
                         'fechaInicio' => substr($row['hora_inicio'], 0, 5),
                         'fechaFinal' => substr($row['hora_fin'], 0, 5)
                     )
                 )
             );
-            $eventsArr[] = $event;
-        }
+        //$eventsArr[] = $event;
+        
 
         echo json_encode($eventsArr);
         

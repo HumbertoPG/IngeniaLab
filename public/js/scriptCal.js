@@ -12,7 +12,7 @@ const calendar = document.querySelector(".calendar"),
   addEventBtn = document.querySelector(".add-event"),
   addEventWrapper = document.querySelector(".add-event-wrapper "),
   addEventCloseBtn = document.querySelector(".close "),
-  addEventTitle = document.querySelector(".event-name "),
+  addEventTitle = document.querySelector(".event-name"),
   addEventFrom = document.querySelector(".event-time-from "),
   addEventTo = document.querySelector(".event-time-to "),
   addEventSubmit = document.querySelector(".add-event-btn ");
@@ -37,25 +37,25 @@ const months = [
   "December",
 ];
 
-const eventsArr = [
-  {
-    day: 13,
-    month: 11,
-    year: 2022,
-    events: [
-      {
-        title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-        timeFrom: "10:00 AM",
-        timeTo: "11:00 AM"
-      },
-    ],
-  },
-];
+// const eventsArr = [
+//   {
+//     day: 13,
+//     month: 11,
+//     year: 2022,
+//     events: [
+//       {
+//         title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
+//         timeFrom: "10:00 AM",
+//         timeTo: "11:00 AM"
+//       },
+//     ],
+//   },
+// ];
 
 
-//const eventsArr = [];
-getEvents();
-console.log(eventsArr);
+const eventsArr = [];
+//getEvents();
+//console.log(eventsArr);
 
 //function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
 function initCalendar() {
@@ -136,7 +136,7 @@ function nextMonth() {
 }
 
 prev.addEventListener("click", prevMonth);
-next.addEventListener("click", nextMonth);
+next.addEventListener("click", nextMonth); ///////////////////////
 
 initCalendar();
 
@@ -248,10 +248,10 @@ function updateEvents(date) {
         events += `<div class="event">
             <div class="title">
               <i class="fas fa-circle"></i>
-              <h3 class="event-title">${event.title}</h3>
+              <h3 class="event-title">${event.motivo}</h3>
             </div>
             <div class="event-time">
-              <span class="event-time">${event.timeFrom} - ${event.timeTo}</span>
+              <span class="event-time">${event.time_from} - ${event.time_to}</span>
             </div>
         </div>`;
       });
@@ -270,7 +270,7 @@ function updateEvents(date) {
 addEventBtn.addEventListener("click", () => {
   addEventWrapper.classList.toggle("active");
 });
-
+///Removeeeeee
 addEventCloseBtn.addEventListener("click", () => {
   addEventWrapper.classList.remove("active");
 });
@@ -286,25 +286,25 @@ addEventTitle.addEventListener("input", (e) => {
   addEventTitle.value = addEventTitle.value.slice(0, 60);
 });
 
-function defineProperty() {
-  var osccred = document.createElement("div");
-  osccred.innerHTML =
-    "A Project By <a href='https://www.youtube.com/channel/UCiUtBDVaSmMGKxg1HYeK-BQ' target=_blank>Open Source Coding</a>";
-  osccred.style.position = "absolute";
-  osccred.style.bottom = "0";
-  osccred.style.right = "0";
-  osccred.style.fontSize = "10px";
-  osccred.style.color = "#ccc";
-  osccred.style.fontFamily = "sans-serif";
-  osccred.style.padding = "5px";
-  osccred.style.background = "#fff";
-  osccred.style.borderTopLeftRadius = "5px";
-  osccred.style.borderBottomRightRadius = "5px";
-  osccred.style.boxShadow = "0 0 5px #ccc";
-  document.body.appendChild(osccred);
-}
+// function defineProperty() {
+//   var osccred = document.createElement("div");
+//   osccred.innerHTML =
+//     "A Project By <a href='https://www.youtube.com/channel/UCiUtBDVaSmMGKxg1HYeK-BQ' target=_blank>Open Source Coding</a>";
+//   osccred.style.position = "absolute";
+//   osccred.style.bottom = "0";
+//   osccred.style.right = "0";
+//   osccred.style.fontSize = "10px";
+//   osccred.style.color = "#ccc";
+//   osccred.style.fontFamily = "sans-serif";
+//   osccred.style.padding = "5px";
+//   osccred.style.background = "#fff";
+//   osccred.style.borderTopLeftRadius = "5px";
+//   osccred.style.borderBottomRightRadius = "5px";
+//   osccred.style.boxShadow = "0 0 5px #ccc";
+//   document.body.appendChild(osccred);
+// }
 
-defineProperty();
+// defineProperty();
 
 //allow only time in eventtime from and to
 addEventFrom.addEventListener("input", (e) => {
@@ -375,7 +375,7 @@ addEventSubmit.addEventListener("click", () => {
 
   // Crear el nuevo evento
   const newEvent = {
-    title: eventTitle,
+    motivo: eventTitle,
     time_from: eventTimeFrom,
     time_to: eventTimeTo,
     day: activeDay,
@@ -383,7 +383,7 @@ addEventSubmit.addEventListener("click", () => {
     year: year
   };
 
-  // Enviar el nuevo evento al servidor usando fetch
+  //Enviar el nuevo evento al servidor usando fetch
   fetch('../../src/reservass/add-reserva.php', {
     method: 'POST',
     headers: {
@@ -420,7 +420,7 @@ addEventSubmit.addEventListener("click", () => {
       }
 
       // Limpiar formulario y actualizar la UI
-      addEventWrapper.classList.remove("active");
+      addEventWrapper.classList.remove("active");/////////////
       addEventTitle.value = "";
       addEventFrom.value = "";
       addEventTo.value = "";
@@ -440,6 +440,7 @@ addEventSubmit.addEventListener("click", () => {
     alert("Error al guardar el evento. Inténtalo de nuevo.");
   });
 });
+
 
 // Cargar eventos desde el servidor al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
@@ -465,7 +466,7 @@ eventsContainer.addEventListener("click", (e) => {
           event.year === year
         ) {
           event.events.forEach((item, index) => {
-            if (item.title === eventTitle) {
+            if (item.motivo === eventTitle) {
               event.events.splice(index, 1);
             }
           });
@@ -491,17 +492,18 @@ function saveEvents() {
   const formData = new FormData();
   formData.append('eventsArr', JSON.stringify(eventsArr));
 
-  fetch('http://localhost/TC2005B_602_01/IngeniaLab/src/reservass/add-reserva.php', {
-    method: 'POST',
-    body: formData,
-  })
-  .then(response => response.text())
-  .then(data => {
-    console.log(data); // Muestra la respuesta del servidor
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+  // fetch('http://localhost/TC2005B_602_01/IngeniaLab/src/reservass/add-reserva.php', {
+  //   method: 'POST',
+  //   body: formData,
+  // })
+  // .then(response => response.text())
+  // .then(data => {
+  //   console.log(data); // Muestra la respuesta del servidor
+  // })
+  // .catch((error) => {
+  //   console.error('Error:', error);
+  // });
+  
 }
 
 
