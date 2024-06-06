@@ -459,6 +459,7 @@ eventsContainer.addEventListener("click", (e) => {
   if (e.target.classList.contains("event")) {
     if (confirm("Are you sure you want to delete this event?")) {
       const eventTitle = e.target.children[0].children[1].innerHTML;
+
       eventsArr.forEach((event) => {
         if (
           event.day === activeDay &&
