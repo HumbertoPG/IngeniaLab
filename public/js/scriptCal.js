@@ -384,7 +384,7 @@ addEventSubmit.addEventListener("click", () => {
   };
 
   //Enviar el nuevo evento al servidor usando fetch
-  fetch('../../src/reservass/add-reserva.php', {
+  fetch('http://localhost/TC2005B_602_01/IngeniaLab/src/reservass/add-reserva.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -444,14 +444,15 @@ addEventSubmit.addEventListener("click", () => {
 
 // Cargar eventos desde el servidor al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-  fetch('../../src/reservass/add-reserva.php')
-    .then(response => response.json())
-    .then(data => {
-      eventsArr = data;
-      updateEvents(activeDay);
-    })
-    .catch(error => console.error('Error al cargar eventos:', error));
+    fetch('http://localhost/TC2005B_602_01/IngeniaLab/src/reservass/add-reserva.php')
+        .then(response => response.json()) // Aquí se espera un JSON, no texto
+        .then(data => {
+            eventsArr.push(...data);
+            initCalendar(); // Inicia el calendario con los eventos obtenidos
+        })
+        .catch(error => console.error('Error al cargar eventos:', error));
 });
+
 
 
 //function to delete event when clicked on event
@@ -511,7 +512,7 @@ function saveEvents() {
 //function to get events from local storage
 function getEvents() {
   
-  fetch('../../src/reservass/add-reserva.php')
+  fetch('http://localhost/TC2005B_602_01/IngeniaLab/src/reservass/add-reserva.php')
   .then(response => response.json())
   .then(data => {
     eventsArr.push(...data);
@@ -533,3 +534,4 @@ function convertTime(time) {
   time = timeHour + ":" + timeMin + " " + timeFormat;
   return time;
 }
+
